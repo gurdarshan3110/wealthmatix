@@ -3,7 +3,7 @@
 <html lang="en">
   
   <head>
-    <title>Store Management System</title>
+    <title>Loanshope</title>
     <meta name="title" content="Store Management System">
     <meta property="og:image" content="{{asset('/assets/images/favicon.ico')}}">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
