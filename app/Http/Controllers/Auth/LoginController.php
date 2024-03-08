@@ -33,7 +33,6 @@ class LoginController extends Controller
         $userTypes = [User::USER_SUPER_ADMIN]; 
 
         if (Auth::attempt($credentials) && in_array(Auth::user()->user_type, $userTypes)) {
-            $this->selectStore($request);
             return redirect()->intended('/dashboard');
         } else {
             // Authentication failed
@@ -61,4 +60,13 @@ class LoginController extends Controller
 
         return response()->json(['store'=>$store,'success' => true]);
     }
+
+    public function registration()
+    {
+        if(Auth::user()){
+            return redirect()->intended('dashboard');
+        }
+        return view('auth.registration');
+    }
+
 }

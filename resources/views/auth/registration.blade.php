@@ -2,7 +2,7 @@
 <html lang="en">
   <!--begin::Head-->
   <head>
-    <title>Mzigo - Logistics Solutions</title>
+    <title>Loanshope</title>
     <meta name="title" content="Mzigo - Logistics Solutions">
     <meta property="og:image" content="{{asset('images/favicon.ico')}}">
 
@@ -29,10 +29,10 @@
       <!--begin::Authentication - Sign-in -->
       <div class="d-flex flex-column flex-column-fluid bgi-position-right bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url(images/tps.png);background-position: right;background-size: contain">
         <!--begin::Content-->
-        <div class="d-flex flex flex-column flex-column-fluid p-10 pb-lg-20">
-          <!--begin::Logo-->
+        <div class="d-flex flex flex-column align-items-center p-10  mx-auto w-100 my-auto">
+          
           <a href="/" class="mb-12">
-            <img alt="Logo" src="/images/watermark.png" class="h-45px" />
+            <img alt="Logo" src="{{asset('/assets/images/watermark.png')}}" class="h-200px" />
           </a>
           <!--end::Logo-->
           <!--begin::Wrapper-->
@@ -68,7 +68,7 @@
                 <label class="form-label fs-6 fw-bolder text-dark">Email</label>
                 <!--end::Label-->
                 <!--begin::Input-->
-                <input class="form-control form-control-lg form-control-solid" type="text" name="email" id="email" placeholder="eg. david@mzigo.com" autocomplete="off" />
+                <input class="form-control form-control-lg form-control-solid" type="text" name="email" id="email" placeholder="eg. david@loanshopee.com" autocomplete="off" />
                 @if ($errors->has('email'))
                     <div class="fv-plugins-message-container invalid-feedback">{{ $errors->first('email') }}</div>
                   @endif
@@ -80,15 +80,15 @@
                 <!--begin::Wrapper-->
                 <div class="mb-1">
                   <!--begin::Label-->
-                  <label class="form-label fw-bolder text-dark fs-6">Password</label>
+                  <label class="form-label fw-bolder text-dark fs-6">Phone No</label>
                   <!--end::Label-->
                   <!--begin::Input wrapper-->
                   <div class="position-relative mb-3">
-                    <input class="form-control form-control-lg form-control-solid" type="password" placeholder="" id="password" name="password" autocomplete="off">
-                    <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+                    <input class="form-control form-control-lg form-control-solid" type="text" placeholder="" id="phone_no" name="phone_no" autocomplete="off">
+                    <!-- <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
                       <i class="bi bi-eye-slash fs-2"></i>
                       <i class="bi bi-eye fs-2 d-none"></i>
-                    </span>
+                    </span> -->
                   </div>
                   <!--end::Input wrapper-->
                 </div>
@@ -111,24 +111,8 @@
                 <div class="text-center text-muted text-uppercase fw-bolder mb-5">or continue with</div>
                 <!--end::Separator-->
                 <!--begin::Google link-->
-                <a href="{{ route('login.google') }}" class="btn btn-flex flex-center btn-light btn-lg mb-5 p-2">
-                <img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg" class="h-20px" /></a>
-                <!--end::Google link-->
-
-                <!--begin::Google link-->
-                <!-- <a href="#" class="btn btn-flex flex-center btn-light btn-lg mb-5 p-2">
-                <img alt="Logo" src="assets/media/svg/brand-logos/apple-black.svg" class="h-20px" /></a> -->
-                <!--end::Google link-->
-
-                <!--begin::Google link-->
-                <a href="{{ route('login.github') }}" class="btn btn-flex flex-center btn-light btn-lg mb-5 p-2">
-                <img alt="Logo" src="images/003-github.png" class="h-20px" /></a>
-                <!--end::Google link-->
-
-                <!--begin::Google link-->
-                <a href="{{ route('login.linkedin') }}" class="btn btn-flex flex-center btn-light btn-lg mb-5 p-2">
-                <img alt="Logo" src="images/001-linkedin.png" class="h-20px" /></a>
-                <!--end::Google link-->
+              
+              
               </div>
               <!--end::Actions-->
             </form>

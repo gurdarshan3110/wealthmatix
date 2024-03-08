@@ -3,7 +3,7 @@
 <html lang="en">
 	<!--begin::Head-->
 	<head>
-		<title>wealthmatix - {{ $title }}</title>
+		<title>SMS - {{ $title }}</title>
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 		<meta property="og:image" content="{{asset('/assets/images/favicon.png')}}">
 		<meta property="og:image" content="{{asset('favicon.ico')}}">

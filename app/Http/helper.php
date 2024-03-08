@@ -8,17 +8,17 @@ function softModules()
     return ModuleMaster::all();
 }
 
-function stores()
-{
-    $stores = Store::all();
-    $html = '';
+// function stores()
+// {
+//     $stores = Store::all();
+//     $html = '';
 
-    foreach ($stores as $store) {
-        $html .= "<option value=\"{$store->id}\"" . (session('store_id') == $store->id ? ' selected' : '') . ">{$store->name}</option>";
-    }
+//     foreach ($stores as $store) {
+//         $html .= "<option value=\"{$store->id}\"" . (session('store_id') == $store->id ? ' selected' : '') . ">{$store->name}</option>";
+//     }
 
-    return $html;
-}
+//     return $html;
+// }
 
 function dateFormatdMY($date){
     if($date=='' || $date==null){

@@ -14,6 +14,7 @@ class SuperAdminSeeder extends Seeder
         User::create([
             'name' => 'Super Admin',
             'email' => 'admin@hextechnologies.in',
+            'username' => 'admin',
             'phone_no' => '9023279634', 
             'password' => Hash::make('store@hex'), 
             'user_type' => 'super_admin',

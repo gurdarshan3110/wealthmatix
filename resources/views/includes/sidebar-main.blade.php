@@ -13,11 +13,11 @@
                 <!--end::Link-->
             </div>
             <!--end::Logo-->
-            <div class="p-2">
+            <!-- <div class="p-2">
                 <select class="form-control mt-1" id="select_store">
-                   <?php echo stores();?>
+                   <?php //echo stores();?>
                 </select>
-            </div>
+            </div> -->
             <!--begin::Menu-->
             <div class="docs-aside-menu flex-column-fluid h-75 overflow-scroll">
                 <!--begin::Aside Menu-->
@@ -26,6 +26,7 @@
                     <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_docs_aside_menu" data-kt-menu="true">
                     	<?php $modules = softModules();?>
                         @foreach ($modules as $module)
+                            @if(Auth::user()->user_type==\App\Models\User::USER_SUPER_ADMIN)
                             <div class="menu-item px-4 mt-1 {{ request()->is($module->url . '*') ? 'active-menu-item' : '' }}">
                                 <a class="menu-link py-2" href="{{ route($module->url.'.index') }}">
                                     <span class="menu-title">
@@ -34,6 +35,31 @@
                                     </span>
                                 </a>
                             </div>
+                            @endif
+                            @if(Auth::user()->user_type==\App\Models\User::USER_AGENCY)
+                                @if($module->name=='Dashboard' || $module->name=='Documents' || $module->name=='Agents' || $module->name=='Customers')
+                                <div class="menu-item px-4 mt-1 {{ request()->is($module->url . '*') ? 'active-menu-item' : '' }}">
+                                    <a class="menu-link py-2" href="{{ route($module->url.'.index') }}">
+                                        <span class="menu-title">
+                                            <img src="{{ $module->icon ? asset($module->icon) : asset('/assets/images/default-icon.png') }}" class="icon">
+                                            <span class="m-4 mb-0 mt-0 fw-normal">{{ $module->name }}</span>
+                                        </span>
+                                    </a>
+                                </div>
+                                @endif
+                            @endif
+                            @if(Auth::user()->user_type==\App\Models\User::USER_AGENT)
+                                @if($module->name=='Dashboard' || $module->name=='Documents' || $module->name=='Customers')
+                                <div class="menu-item px-4 mt-1 {{ request()->is($module->url . '*') ? 'active-menu-item' : '' }}">
+                                    <a class="menu-link py-2" href="{{ route($module->url.'.index') }}">
+                                        <span class="menu-title">
+                                            <img src="{{ $module->icon ? asset($module->icon) : asset('/assets/images/default-icon.png') }}" class="icon">
+                                            <span class="m-4 mb-0 mt-0 fw-normal">{{ $module->name }}</span>
+                                        </span>
+                                    </a>
+                                </div>
+                                @endif
+                            @endif
                         @endforeach
 
                         {!! Form::open(['route' => ['logout'], 'method' => 'post']) !!}

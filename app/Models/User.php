@@ -21,14 +21,14 @@ class User extends Authenticatable
 
     public const USER_SUPER_ADMIN = 'super_admin';
 
-    public const USER_EMPLOYEE = 'employee';
+    public const USER_AGENCY = 'agency';
+
+    public const USER_AGENT = 'agent';
 
     public const USER_CUSTOMER = 'customer';
 
-    public const USER_SUPPLIER = 'supplier';
-
     protected $fillable = [
-        'name', 'email', 'phone_no', 'password', 'user_type', 'status',
+        'name', 'email', 'username', 'phone_no', 'password', 'user_type', 'status',
     ];
 
     /**
@@ -50,18 +50,57 @@ class User extends Authenticatable
         'phone_verified_at' => 'datetime',
     ];
 
-    public function suppliers()
+    public function agency()
     {
-        return $this->belongsToMany(Supplier::class, 'user_supplier');
+        return $this->hasOneThrough(
+            Agency::class,
+            AgencyUser::class,
+            'user_id',
+            'id',
+            'id',
+            'agency_id'
+        );
     }
 
-    public function employees()
+    public function agents()
     {
-        return $this->belongsToMany(Employee::class, 'employee_user');
+        return $this->hasOneThrough(
+            Agent::class,
+            AgentUser::class,
+            'user_id',
+            'id',
+            'id',
+            'agent_id'
+        );
     }
 
     public function customers()
     {
         return $this->belongsToMany(Customer::class, 'customer_user');
     }
+
+    public function agencyId()
+    {
+        $agency_id = '';
+        switch ($this->user_type) {
+            case User::USER_SUPER_ADMIN:
+                $agency_id = 0;
+                break;
+
+            case User::USER_AGENCY:
+                $agency_id = $this->agency->id;
+                break;
+
+            case User::USER_AGENT:
+                $agency_id = $this->agent->agency_id;
+                break;
+
+            case User::USER_CUSTOMER:
+                $agency_id = $this->customer->agency_id;
+                break;
+        }
+
+        return $agency_id;
+    }
+
 }
