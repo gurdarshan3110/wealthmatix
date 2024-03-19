@@ -52,7 +52,7 @@ class BankAddressController extends Controller
     {
         $input = $request->all();
         $validatedData = $request->validate([
-            'bank_id' => 'required|unique:banks|string|max:255',
+            'bank_id' => 'required',
             'status' => 'required'
         ]);
 
