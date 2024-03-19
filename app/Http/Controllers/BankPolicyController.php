@@ -9,6 +9,10 @@ use Illuminate\Support\Str;
 use App\Models\Bank;
 use App\Models\Loan;
 use App\Models\BankPolicy;
+use App\Models\Category;
+use App\Models\BankPolicyCategory;
+use App\Models\Parameter;
+use App\Models\BankPolicyParameter;
 use App\Models\User;
 use DataTables;
 
@@ -43,7 +47,12 @@ class BankPolicyController extends Controller
         $banks = Bank::where('status', 1)
             ->pluck('name', 'id')
             ->prepend('Select Bank', '');
-        return view('policy.create', compact('title','loans','banks'));
+        $categories = Category::where('status', 1)
+            ->pluck('name', 'id');
+        $parameters = Parameter::where('status', 1)
+            ->pluck('name', 'id')
+            ->prepend('Select Parameter', '');
+        return view('policy.create', compact('title','loans','banks','categories','parameters'));
     }
 
     /**
@@ -61,8 +70,28 @@ class BankPolicyController extends Controller
             'policy' => 'required',
             'status' => 'required'
         ]);
-
-        $bankpolicy = BankPolicy::create($input);
+        $bankpolicy = BankPolicy::create([
+            'bank_id' => $input['bank_id'],
+            'loan_id' => $input['loan_id'],
+            'policy' => $input['policy'],
+            'status' => $input['status'],
+        ]);
+        foreach ($input['category_id'] as $key => $value) {
+            BankPolicyCategory::create([
+                'bank_policy_id'=> $bankpolicy->id,
+                'category_id' => $input['category_id'][$key],
+                'status' =>1
+            ]);
+        }
+        foreach ($input['parameter_id'] as $key => $value) {
+            BankPolicyParameter::create([
+                'bank_policy_id'=> $bankpolicy->id,
+                'parameter_id' => $input['parameter_id'][$key],
+                'start' => $input['start'][$key],
+                'end' => $input['end'][$key],
+                'status' =>1
+            ]);
+        }
 
         return redirect()->route('policies.index', $bankpolicy->id)->with('success', 'Bank Policy created successfully.');
     }
@@ -152,7 +181,7 @@ class BankPolicyController extends Controller
             ->addColumn('policy', function ($row) {
                 $imageHtml = '<a href="' . $row->policyMedia->file_path . '" alt="' . $row->policyMedia->file_name . '">Policy</a>';
 
-                return $roi;
+                return $imageHtml;
             })
 
             ->addColumn('status', function ($row) {

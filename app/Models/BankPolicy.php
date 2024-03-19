@@ -12,15 +12,24 @@ class BankPolicy extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'loan_id',
-        'bank_id',
-        'policy',
-        'status',
+        'loan_id', 'bank_id', 'category_id', 'policy', 'status'
     ];
+
+    public function parameters()
+    {
+        return $this->belongsToMany(Parameter::class, 'bank_policy_parameters')
+                    ->withPivot('start', 'end')
+                    ->withTimestamps();
+    }
 
     public function loan()
     {
         return $this->belongsTo(Loan::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     public function bank()

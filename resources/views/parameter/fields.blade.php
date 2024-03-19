@@ -8,9 +8,9 @@
         <?php 
         $src = '';
         $srcId = '';
-        if(!empty($bank) && $bank->logo != '' ){ 
-            $src = $bank->logoMedia->file_path;
-            $srcId = $bank->logo;
+        if(!empty($parameter) && $parameter->logo != '' ){ 
+            $src = $parameter->logoMedia->file_path;
+            $srcId = $parameter->logo;
         } 
         ?>
         {!! Form::hidden('logo', $srcId, ['class' => 'form-control', 'id' => 'logo_image']) !!}
@@ -24,14 +24,14 @@
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
 
+<!-- Status Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('channel_name', 'Channel Name:') !!}
-    {!! Form::text('channel_name', null, ['class' => 'form-control']) !!}
-</div>
-
-<div class="form-group col-sm-6">
-    {!! Form::label('channel_code', 'Channel Code:') !!}
-    {!! Form::text('channel_code', null, ['class' => 'form-control']) !!}
+    {!! Form::label('primary', 'Primary Parameter:') !!}
+    <?php 
+    $primary = '';
+    if(!empty($parameter) && $parameter['primary'] != '' ){ $primary = $parameter['primary'];} else{ $primary = 1; } 
+    ?>
+    {!! Form::select('primary', ['' =>'Select Primary Parameter',0 =>'In Active', 1 => 'Active'], $primary, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Status Field -->
@@ -39,7 +39,7 @@
     {!! Form::label('status', 'Status:') !!}
     <?php 
     $status = '';
-    if(!empty($bank) && $bank['status'] != '' ){ $status = $bank['status'];} else{ $status = 1; } 
+    if(!empty($parameter) && $parameter['status'] != '' ){ $status = $parameter['status'];} else{ $status = 1; } 
     ?>
     {!! Form::select('status', ['' =>'Select Status',0 =>'In Active', 1 => 'Active'], $status, ['class' => 'form-control']) !!}
 </div>

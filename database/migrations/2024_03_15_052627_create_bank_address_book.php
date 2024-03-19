@@ -13,12 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bank_policies', function (Blueprint $table) {
+        Schema::create('bank_addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('loan_id')->nullable()->constrained('loans');
             $table->foreignId('bank_id')->nullable()->constrained('banks');
-            $table->foreignId('category_id')->nullable()->constrained('categories');
-            $table->foreignId('policy')->nullable()->constrained('media');
+            $table->string('address');
+            $table->string('city');
+
+            $table->string('sales_manager');
+            $table->string('sales_manager_email');
+            $table->string('sales_manager_phone');
+
+            $table->string('area_sales_manager');
+            $table->string('area_sales_manager_email');
+            $table->string('area_sales_manager_phone');
 
             $table->boolean('status')->default(0);
             $table->softDeletes();
@@ -33,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bank_policies');
+        Schema::dropIfExists('bank_addresses');
     }
 };

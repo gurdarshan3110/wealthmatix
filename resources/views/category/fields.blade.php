@@ -8,9 +8,9 @@
         <?php 
         $src = '';
         $srcId = '';
-        if(!empty($bank) && $bank->logo != '' ){ 
-            $src = $bank->logoMedia->file_path;
-            $srcId = $bank->logo;
+        if(!empty($category) && $category->logo != '' ){ 
+            $src = $category->logoMedia->file_path;
+            $srcId = $category->logo;
         } 
         ?>
         {!! Form::hidden('logo', $srcId, ['class' => 'form-control', 'id' => 'logo_image']) !!}
@@ -24,22 +24,12 @@
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
 
-<div class="form-group col-sm-6">
-    {!! Form::label('channel_name', 'Channel Name:') !!}
-    {!! Form::text('channel_name', null, ['class' => 'form-control']) !!}
-</div>
-
-<div class="form-group col-sm-6">
-    {!! Form::label('channel_code', 'Channel Code:') !!}
-    {!! Form::text('channel_code', null, ['class' => 'form-control']) !!}
-</div>
-
 <!-- Status Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('status', 'Status:') !!}
     <?php 
     $status = '';
-    if(!empty($bank) && $bank['status'] != '' ){ $status = $bank['status'];} else{ $status = 1; } 
+    if(!empty($category) && $category['status'] != '' ){ $status = $category['status'];} else{ $status = 1; } 
     ?>
     {!! Form::select('status', ['' =>'Select Status',0 =>'In Active', 1 => 'Active'], $status, ['class' => 'form-control']) !!}
 </div>

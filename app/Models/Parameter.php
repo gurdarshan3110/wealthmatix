@@ -6,20 +6,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Bank extends Model
+class Parameter extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
-        'channel_name',
-        'channel_code',
         'logo',
+        'primary',
         'status',
     ];
 
+    // Define relationship with Media model assuming 'media' table exists
     public function logoMedia()
     {
         return $this->belongsTo(Media::class, 'logo');
     }
+
+    public function bankPolicies()
+    {
+        return $this->belongsToMany(BankPolicy::class, 'bank_policy_parameters')
+                    ->withPivot('start', 'end')
+                    ->withTimestamps();
+    }
+    
 }

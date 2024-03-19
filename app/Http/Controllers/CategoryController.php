@@ -6,24 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use App\Models\Bank;
+use App\Models\Category;
 use App\Models\User;
 use DataTables;
 
-class BankController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    const TITLE = 'Banks';
+    const TITLE = 'Categories';
 
     public function index()
     {
         $title = self::TITLE;
 
-        return view('bank.index', compact('title'));
+        return view('category.index', compact('title'));
     }
 
     /**
@@ -34,8 +34,8 @@ class BankController extends Controller
 
     public function create(Request $request)
     {
-        $title = 'Add New Bank';
-        return view('bank.create', compact('title'));
+        $title = 'Add New Category';
+        return view('category.create', compact('title'));
     }
 
     /**
@@ -48,14 +48,13 @@ class BankController extends Controller
     {
         $input = $request->all();
         $validatedData = $request->validate([
-            'name' => 'required|unique:banks|string|max:255',
-            'logo' => 'required|integer',
+            'name' => 'required|unique:categories|string|max:255',
             'status' => 'required'
         ]);
 
-        $bank = Bank::create($input);
+        $category = Category::create($input);
 
-        return redirect()->route('banks.index', $bank->id)->with('success', 'Bank created successfully.');
+        return redirect()->route('category.index', $category->id)->with('success', 'Category created successfully.');
     }
 
     /**
@@ -66,10 +65,10 @@ class BankController extends Controller
      */
     public function show($id)
     {
-        $title = 'View Bank Details';
-        $bank = Bank::find($id);
+        $title = 'View Category Details';
+        $Category = Category::find($id);
 
-        return view('bank.show', compact('bank', 'title'));
+        return view('Category.show', compact('Category', 'title'));
     }
 
     /**
@@ -78,10 +77,10 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Bank $bank)
+    public function edit(Category $category)
     {
-        $title = 'Edit Bank';
-        return view('bank.edit', compact('bank', 'title'));
+        $title = 'Edit Category';
+        return view('category.edit', compact('category', 'title'));
     }
 
     /**
@@ -91,19 +90,18 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Bank $bank)
+    public function update(Request $request, Category $category)
     {
         $input = $request->all();
         $validatedData = $request->validate([
-            'name' => 'required|unique:banks,name,' . $bank->id . '|string|max:255',
-            'logo' => 'nullable|integer',
+            'name' => 'required|unique:categories,name,' . $category->id . '|string|max:255',
             'status' => 'required'
         ]);
 
-        $bank->update($input);
+        $category->update($input);
 
-        return redirect()->route('banks.index')
-                         ->with('success', 'Bank updated successfully.');
+        return redirect()->route('categories.index')
+                         ->with('success', 'Category updated successfully.');
     }
 
     /**
@@ -112,17 +110,17 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bank $bank)
+    public function destroy(Category $category)
     {
-        $bank->delete();
+        $category->delete();
 
-        return redirect()->route('banks.index')
-                         ->with('success', 'Bank deleted successfully.');
+        return redirect()->route('category.index')
+                         ->with('success', 'Category deleted successfully.');
     }
 
     public function list()
     {
-        $data = Bank::all();
+        $data = Category::all();
 
         return DataTables::of($data)
 
@@ -138,18 +136,6 @@ class BankController extends Controller
                 return $name;
             })
 
-            ->addColumn('channel_name', function ($row) {
-                $channel_name = $row->channel_name;
-
-                return $channel_name;
-            })
-
-            ->addColumn('channel_code', function ($row) {
-                $channel_code = $row->channel_code;
-
-                return $channel_code;
-            })
-
             ->addColumn('status', function ($row) {
                 $status = (($row->status == 1) ? 'Active' : 'Inactive');
 
@@ -157,11 +143,11 @@ class BankController extends Controller
             })
             ->addColumn('action', function ($row) {
                 $msg = 'Are you sure?';
-                $action = '<form action="'.route('banks.destroy', [$row]).'" method="post">
+                $action = '<form action="'.route('category.destroy', [$row]).'" method="post">
                     '.csrf_field().'
                     '.method_field('DELETE').'
                     <div class="btn-group">
-                    <a href="'.route('banks.edit', [$row]).'"
+                    <a href="'.route('category.edit', [$row]).'"
                        class="btn btn-warning btn-xs">
                         <i class="far fa-edit"></i>
                     </a>
@@ -179,9 +165,9 @@ class BankController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-        $banks = Bank::where('name', 'LIKE', "%{$query}%")->get(['name','id']);
+        $category = Category::where('name', 'LIKE', "%{$query}%")->get(['name','id']);
 
-        return response()->json($banks);
+        return response()->json($category);
     }
 
 }

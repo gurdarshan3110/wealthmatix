@@ -1,37 +1,49 @@
-<!-- Name Field -->
-<div class="form-group col-sm-6">
-    <div class="form-group">
-        {!! Form::label('avatar', 'Logo:') !!}
-        {!! Form::file('image', ['class' => 'form-control', 'id' => 'file']) !!}
-    </div>
-    <div class="form-group mt-2">
-        <?php 
-        $src = '';
-        $srcId = '';
-        if(!empty($bank) && $bank->logo != '' ){ 
-            $src = $bank->logoMedia->file_path;
-            $srcId = $bank->logo;
-        } 
-        ?>
-        {!! Form::hidden('logo', $srcId, ['class' => 'form-control', 'id' => 'logo_image']) !!}
-        <img src="{{$src}}" alt="Preview" class="img-thumbnail" id="avatar-preview" style="display: {{(($src!='')?'block':'none')}}; max-width: 200px; max-height: 200px;">
-    </div>
-</div>
 
 <!-- Name Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('name', 'Name:') !!}
-    {!! Form::text('name', null, ['class' => 'form-control']) !!}
+    {!! Form::label('bank_id', 'Bank:') !!}
+    {!! Form::label('bank_id', 'Bank:') !!}
+    <?php 
+    $bank_id = '';
+    if(!empty($bankaddress) && $bank['bankaddress'] != '' ){ $bank_id = $bankaddress['bank_id'];} 
+    ?>
+    {!! Form::select('bank_id',$banks, $bank_id, ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group col-sm-6">
-    {!! Form::label('channel_name', 'Channel Name:') !!}
-    {!! Form::text('channel_name', null, ['class' => 'form-control']) !!}
+    {!! Form::label('City', 'City:') !!}
+    {!! Form::text('city', null, ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group col-sm-6">
-    {!! Form::label('channel_code', 'Channel Code:') !!}
-    {!! Form::text('channel_code', null, ['class' => 'form-control']) !!}
+    {!! Form::label('address', 'Address:') !!}
+    {!! Form::text('address', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('sales_manager', 'Sales Manager:') !!}
+    {!! Form::text('sales_manager', null, ['class' => 'form-control']) !!}
+</div>
+<div class="form-group col-sm-6">
+    {!! Form::label('sales_manager_email', 'Sales manager Email:') !!}
+    {!! Form::email('sales_manager_email', null, ['class' => 'form-control']) !!}
+</div>
+<div class="form-group col-sm-6">
+    {!! Form::label('sales_manager_phone', 'Sales Manager Phone:') !!}
+    {!! Form::text('sales_manager_phone', null, ['class' => 'form-control']) !!}
+</div>
+
+<div class="form-group col-sm-6">
+    {!! Form::label('area_sales_manager', 'Area Sales Manager:') !!}
+    {!! Form::text('area_sales_manager', null, ['class' => 'form-control']) !!}
+</div>
+<div class="form-group col-sm-6">
+    {!! Form::label('area_sales_manager_email', 'Area Sales manager Email:') !!}
+    {!! Form::email('area_sales_manager_email', null, ['class' => 'form-control']) !!}
+</div>
+<div class="form-group col-sm-6">
+    {!! Form::label('area_sales_manager_phone', 'Area Sales Manager Phone:') !!}
+    {!! Form::text('area_sales_manager_phone', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Status Field -->

@@ -7,23 +7,24 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Models\Bank;
+use App\Models\BankAddress;
 use App\Models\User;
 use DataTables;
 
-class BankController extends Controller
+class BankAddressController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    const TITLE = 'Banks';
+    const TITLE = 'Banks Address Book';
 
     public function index()
     {
         $title = self::TITLE;
 
-        return view('bank.index', compact('title'));
+        return view('bankaddress.index', compact('title'));
     }
 
     /**
@@ -34,8 +35,11 @@ class BankController extends Controller
 
     public function create(Request $request)
     {
-        $title = 'Add New Bank';
-        return view('bank.create', compact('title'));
+        $title = 'Add New Bank Address';
+        $banks = Bank::where('status', 1)
+            ->pluck('name', 'id')
+            ->prepend('Select Bank', '');
+        return view('bankaddress.create', compact('banks','title'));
     }
 
     /**
@@ -48,14 +52,13 @@ class BankController extends Controller
     {
         $input = $request->all();
         $validatedData = $request->validate([
-            'name' => 'required|unique:banks|string|max:255',
-            'logo' => 'required|integer',
+            'bank_id' => 'required|unique:banks|string|max:255',
             'status' => 'required'
         ]);
 
-        $bank = Bank::create($input);
+        $bank = BankAddress::create($input);
 
-        return redirect()->route('banks.index', $bank->id)->with('success', 'Bank created successfully.');
+        return redirect()->route('addressbook.index', $bank->id)->with('success', 'Address created successfully.');
     }
 
     /**
@@ -78,10 +81,10 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Bank $bank)
+    public function edit(BankAddress $bankaddress)
     {
-        $title = 'Edit Bank';
-        return view('bank.edit', compact('bank', 'title'));
+        $title = 'Edit Address Book';
+        return view('bankaddress.edit', compact('bankaddress', 'title'));
     }
 
     /**
@@ -91,19 +94,17 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Bank $bank)
+    public function update(Request $request, BankAddress $bankaddress)
     {
         $input = $request->all();
         $validatedData = $request->validate([
-            'name' => 'required|unique:banks,name,' . $bank->id . '|string|max:255',
-            'logo' => 'nullable|integer',
             'status' => 'required'
         ]);
 
         $bank->update($input);
 
-        return redirect()->route('banks.index')
-                         ->with('success', 'Bank updated successfully.');
+        return redirect()->route('addressbook.index')
+                         ->with('success', 'Address book updated successfully.');
     }
 
     /**
@@ -112,42 +113,42 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bank $bank)
+    public function destroy(BankAddress $bankaddress)
     {
-        $bank->delete();
+        $bankaddress->delete();
 
-        return redirect()->route('banks.index')
-                         ->with('success', 'Bank deleted successfully.');
+        return redirect()->route('addressbook.index')
+                         ->with('success', 'Address book deleted successfully.');
     }
 
     public function list()
     {
-        $data = Bank::all();
+        $data = BankAddress::with('bank')->get();
 
         return DataTables::of($data)
 
-            ->addColumn('logo', function ($row) {
-                $logo = $row->logoMedia;
-                $imageHtml = '<div style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;"><img src="' . $logo->file_path . '" alt="' . $logo->file_name . '" style="width: 100%; height: 100%; object-fit: cover;"></div>';
-                return $imageHtml;
+            ->addColumn('bank', function ($row) {
+                $bank = $row->bank->name;
+
+                return $bank;
             })
 
-            ->addColumn('name', function ($row) {
-                $name = $row->name;
+            ->addColumn('city', function ($row) {
+                $city = $row->city;
 
-                return $name;
+                return $city;
             })
 
-            ->addColumn('channel_name', function ($row) {
-                $channel_name = $row->channel_name;
+            ->addColumn('sales_manager', function ($row) {
+                $sales_manager = $row->sales_manager;
 
-                return $channel_name;
+                return $sales_manager;
             })
 
-            ->addColumn('channel_code', function ($row) {
-                $channel_code = $row->channel_code;
+            ->addColumn('sales_manager_phone', function ($row) {
+                $sales_manager_phone = $row->sales_manager_phone;
 
-                return $channel_code;
+                return $sales_manager_phone;
             })
 
             ->addColumn('status', function ($row) {
@@ -157,11 +158,11 @@ class BankController extends Controller
             })
             ->addColumn('action', function ($row) {
                 $msg = 'Are you sure?';
-                $action = '<form action="'.route('banks.destroy', [$row]).'" method="post">
+                $action = '<form action="'.route('addressbook.destroy', [$row]).'" method="post">
                     '.csrf_field().'
                     '.method_field('DELETE').'
                     <div class="btn-group">
-                    <a href="'.route('banks.edit', [$row]).'"
+                    <a href="'.route('addressbook.edit', [$row]).'"
                        class="btn btn-warning btn-xs">
                         <i class="far fa-edit"></i>
                     </a>

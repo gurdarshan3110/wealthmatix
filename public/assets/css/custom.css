@@ -642,3 +642,11 @@ table.jobs-tab {
 .tt-suggestion.tt-selectable:hover{
     background: #e7e7e7;
 }
+
+.bs-caret {
+    display: none;
+}
+
+.btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(.border-active):not(.btn-flush):not(.btn-icon) {
+    border: 1px solid #ccc !important;
+}

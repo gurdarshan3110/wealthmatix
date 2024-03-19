@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('banks', function (Blueprint $table) {
+        Schema::create('parameters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('channel_name');
-            $table->string('channel_code');
             $table->foreignId('logo')->nullable()->constrained('media');
+            $table->boolean('primary')->default(0);
 
             $table->boolean('status')->default(0);
             $table->softDeletes();
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('banks');
+        Schema::dropIfExists('parameters');
     }
 };

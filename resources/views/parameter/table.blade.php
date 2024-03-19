@@ -4,8 +4,6 @@
         <tr>
             <th width="10%">Logo</th>
             <th>Name</th>
-            <th>ChannelName</th>
-            <th>Channel Code</th>
             <th>Status</th>
             <th  style="width:15%;">Action</th>
         </tr>
@@ -28,12 +26,10 @@
         var table=$('#record-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "/banks/list",
+                ajax: "/parameter/list",
                 columns: [
                     {data: 'logo', name: 'logo'},
                     {data: 'name', name: 'name'},
-                    {data: 'channel_name', name: 'channel_name'},
-                    {data: 'channel_code', name: 'channel_code'},
                     {data: 'status', name: 'status'},
                     {data: 'action', name: 'action',className:'action'},
                     
@@ -65,7 +61,7 @@
             $('#filter').click(function(){
                 var min=$('#min').val();
                 var max=$('#max').val();
-                table.ajax.url( '/banks/list?min='+min+'&max='+max ).load();
+                table.ajax.url( '/parameter/list?min='+min+'&max='+max ).load();
             });
     </script>
 @endpush
