@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('loan_id')->nullable()->constrained('loans');
             $table->foreignId('bank_id')->nullable()->constrained('banks');
-            $table->foreignId('category_id')->nullable()->constrained('categories');
             $table->foreignId('policy')->nullable()->constrained('media');
 
             $table->boolean('status')->default(0);

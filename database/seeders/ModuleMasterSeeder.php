@@ -27,16 +27,30 @@ class ModuleMasterSeeder extends Seeder
 
         // Add Units module
         ModuleMaster::create([
-            'name' => 'Loans',
+            'name' => 'Products',
             'icon' => '/assets/images/loans-icon.png',
             'url' => 'loans',
             'status' => 1,
         ]);
 
         ModuleMaster::create([
-            'name' => 'Bank Settings',
+            'name' => 'Categories',
+            'icon' => '/assets/images/categories-icon.png',
+            'url' => 'category',
+            'status' => 1,
+        ]);
+
+        ModuleMaster::create([
+            'name' => 'Parameters',
+            'icon' => '/assets/images/parameters-icon.png',
+            'url' => 'parameter',
+            'status' => 1,
+        ]);
+
+        ModuleMaster::create([
+            'name' => 'Policies',
             'icon' => '/assets/images/bank-settings-icon.png',
-            'url' => 'loans',
+            'url' => 'policies',
             'status' => 1,
         ]);
 
