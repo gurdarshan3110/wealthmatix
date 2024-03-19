@@ -25,6 +25,13 @@ class ModuleMasterSeeder extends Seeder
             'status' => 1,
         ]);
 
+        ModuleMaster::create([
+            'name' => 'Address Book',
+            'icon' => '/assets/images/addresses-icon.png',
+            'url' => 'addressbook',
+            'status' => 1,
+        ]);
+
         // Add Units module
         ModuleMaster::create([
             'name' => 'Products',
