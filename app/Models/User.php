@@ -84,11 +84,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Agency::class, 'agency_user');
     }
 
-    public function agents()
-    {
-        return $this->belongsToMany(Agent::class, 'agent_user');
-    }
-
     public function agencyId()
     {
         $agency_id = '';
